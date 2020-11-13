@@ -384,6 +384,7 @@ while [ $i -le $max_try ]; do
             (cd / && tar cf - $src) | tar xf -
             sync
         done
+	rm -rf opt/docker && ln -sf /mnt/${EMMC_NAME}p4/docker/ opt/docker
         echo "Copy complete."
 		
         echo "Edit configuration file ..."
@@ -422,6 +423,7 @@ echo "complete."
 echo "Create a shared file system: format to [ ext4 ] ... "
 mkfs.ext4 -F -L "EMMC_SHARED"  -m 0 /dev/${EMMC_NAME}p4 >/dev/null
 mount -t ext4 /dev/${EMMC_NAME}p4 /mnt/${EMMC_NAME}p4
+mkdir -p /mnt/${EMMC_NAME}p4/docker
 echo "complete."
 
 echo "Note: The original bootloader has been exported to [ /root/backup-bootloader.img ], please download and save!"
