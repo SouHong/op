@@ -163,8 +163,8 @@ format_image() {
     parted -s $image mkpart primary ext4 $((SKIP_MB + BOOT_MB))M 100% 2>/dev/null
 
     loop_setup $image
-    mkfs.vfat -n "BOOT" ${loop}p1 2>/dev/null
-    mke2fs -F -q -t ext4 -L "ROOTFS" -m 0 ${loop}p2 2>/dev/null
+    mkfs.vfat -n "BOOT" ${loop}p1 >/dev/null 2>&1
+    mke2fs -F -q -t ext4 -L "ROOTFS" -m 0 ${loop}p2 >/dev/null 2>&1
 
     #Complete file
     complete_path=${make_path}/router/s905x3_phicomm-n1/install-program/files
