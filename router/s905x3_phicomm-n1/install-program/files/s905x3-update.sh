@@ -189,6 +189,8 @@ for src in $COPY_SRC; do
     (cd ${P2} && tar cf - $src) | tar xf -
     sync
 done
+[ -d /mnt/mmcblk2p4/docker ] || mkdir -p /mnt/mmcblk2p4/docker
+rm -rf opt/docker && ln -sf /mnt/mmcblk2p4/docker/ opt/docker
 
 if  [ -f /mnt/${NEW_ROOT_NAME}/etc/config/AdGuardHome ]; then
     [ -d /mnt/mmcblk2p4/AdGuardHome/data ] || mkdir -p /mnt/mmcblk2p4/AdGuardHome/data
@@ -216,6 +218,7 @@ echo "Copy data complete ..."
 
 echo "Modify the configuration file ... "
 rm -f "./etc/rc.local.orig" "./usr/bin/mk_newpart.sh" "./etc/part_size"
+rm -rf "./opt/docker" && ln -sf "/mnt/mmcblk2p4/docker" "./opt/docker"
 
 cat > ./etc/fstab <<EOF
 UUID=${NEW_ROOT_UUID} / btrfs compress=zstd 0 1
@@ -269,6 +272,10 @@ fi
 mv ./etc/rc.local ./etc/rc.local.orig
 
 cat > ./etc/rc.local <<EOF
+if [ ! -f /etc/rc.d/*dockerd ]; then
+    /etc/init.d/dockerd enable
+    /etc/init.d/dockerd start
+fi
 mv /etc/rc.local.orig /etc/rc.local
 exec /etc/rc.local
 exit
