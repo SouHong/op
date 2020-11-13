@@ -179,5 +179,5 @@ umount -f $part_root
 
 rm -rf install
 
-echo "copy openwrt os to emmc done!"
+echo "Install done, please [ reboot ] your phicomm-n1."
 
