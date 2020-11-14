@@ -81,7 +81,7 @@ jobs:
       uses: actions/upload-artifact@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
-        name: openwrt_s905x3_phicomm-n1_test_${{ env.FILE_DATE }}
+        name: openwrt_s905x3_phicomm-n1_${{ env.FILE_DATE }}
         path: ${{ env.FILEPATH }}
         retention-days: ${{ env.RECENT_LASTEST }}
 
@@ -98,7 +98,7 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ env.FILEPATH }}/*
-        tag: openwrt_s905x3_phicomm-n1_test_${{ env.FILE_DATE }}
+        tag: openwrt_s905x3_phicomm-n1_${{ env.FILE_DATE }}
         overwrite: true
         file_glob: true
         body: |
