@@ -52,7 +52,7 @@ jobs:
       id: download
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" | grep -o "openwrt_.*/openwrt_s905x3_phicomm-n1_.*\.zip" | head -n 1 > DOWNLOAD_URL
+        curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" | grep -o "openwrt_s905x3_.*/openwrt-armvirt-.*\.tar.gz" | head -n 1 > DOWNLOAD_URL
         [ -s DOWNLOAD_URL ] && wget -q -P ${{ env.OPENWRT_PATH }}/openwrt https://github.com/${GITHUB_REPOSITORY}/releases/download/$(cat DOWNLOAD_URL)
         cd ${{ env.OPENWRT_PATH }}/openwrt && unzip *.zip && sync
         rm -rf $( find ${PWD}/* -type d )
