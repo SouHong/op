@@ -82,8 +82,10 @@ jobs:
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
         name: openwrt_s905x3_phicomm-n1_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}
         retention-days: ${{ env.RECENT_LASTEST }}
+        path: |
+          ${{ env.FILEPATH }}/*.img.gz
+          ${{ env.FILEPATH }}/*.tar.gz
 
     - name: Upload firmware to WeTransfer
       if: steps.build.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
