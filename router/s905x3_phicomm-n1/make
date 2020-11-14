@@ -12,7 +12,6 @@ out_path="router/s905x3_phicomm-n1/out"
 armbian_path="router/s905x3_phicomm-n1/armbian" # don't modify it
 openwrt_path="router/s905x3_phicomm-n1/openwrt"
 device="phicomm-n1" # don't modify it
-image_name='v$kernel-openwrt'
 build_openwrt=("n1" "x96" "hk1" "h96" "octopus")
 make_path=${PWD}
 SKIP_MB=16
@@ -147,7 +146,7 @@ utils() {
 
 make_image() {
     build_op=${1}
-    image="$out_path/$kernel/${build_op}-$(eval "echo $image_name")_$(date +"%Y.%m.%d").img"
+    image="$out_path/openwrt_${build_op}_v${kernel}_$(date +"%Y.%m.%d.%H%M").img"
     rm -f $image
     sync
 
