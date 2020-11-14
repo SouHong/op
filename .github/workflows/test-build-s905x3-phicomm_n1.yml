@@ -54,10 +54,8 @@ jobs:
       run: |
         curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" | grep -o "openwrt_s905x3_.*/openwrt-armvirt-.*\.tar.gz" | head -n 1 > DOWNLOAD_URL
         [ -s DOWNLOAD_URL ] && wget -q -P ${{ env.OPENWRT_PATH }}/openwrt https://github.com/${GITHUB_REPOSITORY}/releases/download/$(cat DOWNLOAD_URL)
-        cd ${{ env.OPENWRT_PATH }}/openwrt && unzip *.zip && sync
-        rm -rf $( find ${PWD}/* -type d )
-        rm -rf $( find ${PWD}/* -type f ! -name "*.tar.gz" )
-        [ -f *.tar.gz ] && echo -e $(ls *.tar.gz) file exist || echo -e *.tar.gz file does not exist
+        cd ${{ env.OPENWRT_PATH }}/openwrt
+        [ -f *.tar.gz ] && echo -e "$(ls *.tar.gz) file exist." || echo -e "openwrt-armvirt-*.tar.gz file does not exist."
         echo "FILE_DATE=$(date +"%Y.%m.%d.%H%M")" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
